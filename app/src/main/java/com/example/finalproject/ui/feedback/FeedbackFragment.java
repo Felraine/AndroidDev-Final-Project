@@ -1,4 +1,4 @@
-package com.example.finalproject.ui.slideshow;
+package com.example.finalproject.ui.feedback;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.finalproject.databinding.FragmentSlideshowBinding;
+import com.example.finalproject.databinding.FragmentFeedbackBinding;
 
-public class SlideshowFragment extends Fragment {
+public class FeedbackFragment extends Fragment {
 
-    private FragmentSlideshowBinding binding;
+    private FragmentFeedbackBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SlideshowViewModel slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        FeedbackViewModel feedbackViewModel =
+                new ViewModelProvider(this).get(FeedbackViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentFeedbackBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textFeedback;
+        feedbackViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

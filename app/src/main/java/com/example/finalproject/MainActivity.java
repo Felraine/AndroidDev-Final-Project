@@ -21,6 +21,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(getSupportActionBar() != null){ //hide the finalProject bar or whtver
+            getSupportActionBar().hide();
+
+        }
+
         emailEditText = findViewById(R.id.EduEmail);
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.loginButton);
