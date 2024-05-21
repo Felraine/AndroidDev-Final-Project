@@ -22,4 +22,10 @@
         android:name="com.example.finalproject.ui.feedback.FeedbackFragment"
         android:label="@string/menu_feedback"
         tools:layout="@layout/fragment_feedback" />
+
+    <fragment
+        android:id="@+id/nav_budget"
+        android:name="com.example.finalproject.ui.budget.BudgetFragment"
+        android:label="Budget Tracker"
+        tools:layout="@layout/fragment_budget" />
 </navigation>

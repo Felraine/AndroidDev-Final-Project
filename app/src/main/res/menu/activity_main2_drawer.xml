@@ -16,5 +16,9 @@
             android:id="@+id/nav_feedback"
             android:icon="@drawable/feedback_icon"
             android:title="@string/menu_feedback" />
+        <item
+            android:id="@+id/nav_budget"
+            android:icon="@drawable/budget_icon"
+            android:title="Budget" />
     </group>
 </menu>
