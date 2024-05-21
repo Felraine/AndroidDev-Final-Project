@@ -17,8 +17,13 @@
             android:icon="@drawable/themes_icon"
             android:title="@string/menu_themes" />
         <item
+            android:id="@+id/nav_schedule"
+            android:icon="@drawable/schedule_icon"
+            android:title="Schedule" />
+        <item
             android:id="@+id/nav_feedback"
             android:icon="@drawable/feedback_icon"
             android:title="@string/menu_feedback" />
+
     </group>
 </menu>

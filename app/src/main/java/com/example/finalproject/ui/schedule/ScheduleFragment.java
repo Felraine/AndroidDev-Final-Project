@@ -1,4 +1,4 @@
-package com.example.finalproject.ui.gallery;
+package com.example.finalproject.ui.schedule;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,23 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.finalproject.databinding.FragmentGalleryBinding;
+import com.example.finalproject.databinding.FragmentScheduleBinding;
 
-public class GalleryFragment extends Fragment {
 
-    private FragmentGalleryBinding binding;
+public class ScheduleFragment extends Fragment {
+
+    private FragmentScheduleBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        GalleryViewModel galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+        ScheduleViewModel scheduleViewModel =
+                new ViewModelProvider(this).get(ScheduleViewModel.class);
 
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        binding = FragmentScheduleBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textGallery;
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textSchedule;
+        scheduleViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

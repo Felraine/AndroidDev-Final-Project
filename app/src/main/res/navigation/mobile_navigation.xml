@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/nav_themes"
-        android:name="com.example.finalproject.ui.gallery.GalleryFragment"
+        android:name="com.example.finalproject.ui.customizethemes.CustomizeThemeFragment"
         android:label="@string/menu_themes"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_customizetheme" />
 
     <fragment
         android:id="@+id/nav_feedback"
@@ -28,4 +28,12 @@
         android:name="com.example.finalproject.ui.budget.BudgetFragment"
         android:label="Budget Tracker"
         tools:layout="@layout/fragment_budget" />
+
+    <fragment
+        android:id="@+id/nav_schedule"
+        android:name="com.example.finalproject.ui.schedule.ScheduleFragment"
+        android:label="Schedule"
+        tools:layout="@layout/fragment_schedule"/>
+
+
 </navigation>
