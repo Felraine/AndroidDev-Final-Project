@@ -9,6 +9,10 @@
             android:icon="@drawable/home_icon"
             android:title="@string/menu_home" />
         <item
+            android:id="@+id/nav_budget"
+            android:icon="@drawable/budget_icon"
+            android:title="Budget" />
+        <item
             android:id="@+id/nav_themes"
             android:icon="@drawable/themes_icon"
             android:title="@string/menu_themes" />
@@ -16,9 +20,5 @@
             android:id="@+id/nav_feedback"
             android:icon="@drawable/feedback_icon"
             android:title="@string/menu_feedback" />
-        <item
-            android:id="@+id/nav_budget"
-            android:icon="@drawable/budget_icon"
-            android:title="Budget" />
     </group>
 </menu>
