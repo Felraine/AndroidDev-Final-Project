@@ -6,14 +6,14 @@ import androidx.lifecycle.ViewModel;
 
 public class FeedbackViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    //private final MutableLiveData<String> mText;
 
-    public FeedbackViewModel() {
+   /*public FeedbackViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is Feedback Fragment");
     }
 
     public LiveData<String> getText() {
         return mText;
-    }
+    }*/
 }

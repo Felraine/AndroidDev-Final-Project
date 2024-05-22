@@ -24,8 +24,15 @@ public class FeedbackFragment extends Fragment {
         binding = FragmentFeedbackBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textFeedback;
-        feedbackViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+      /*  final TextView textView = binding.textFeedback;
+        feedbackViewModel.getText().observe(getViewLifecycleOwner(), textView::setText); */
+
+        /*
+        * binding: like a replacement for findViewById.
+        * example: binding.button.setOnClickListener(new View.OnClickListener(){
+        * viewModel.userClicked();
+        * });
+        * */
         return root;
     }
 
