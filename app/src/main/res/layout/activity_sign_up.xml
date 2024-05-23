@@ -11,7 +11,7 @@
         android:id="@+id/layoutPass"
         android:layout_width="328dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="28dp"
         android:background="@drawable/loginpage"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/layoutConfirmPass"
@@ -34,12 +34,12 @@
         android:id="@+id/layoutUsername"
         android:layout_width="328dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="28dp"
         android:background="@drawable/loginpage"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/layoutPass"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent">
 
         <EditText
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
-            android:hint="Username"
+            android:hint="Create Username"
             android:paddingLeft="10sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -62,7 +62,7 @@
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.94">
+        app:layout_constraintVertical_bias="0.905">
 
         <EditText
             android:id="@+id/email"
@@ -100,14 +100,13 @@
         android:id="@+id/signUpButton"
         android:layout_width="177dp"
         android:layout_height="47dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="76dp"
         android:background="@drawable/signupbutton"
         android:text="Sign Up"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView

@@ -1,7 +1,12 @@
 package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
     EditText emailEditText, passwordEditText;
     Button loginButton;
     TextView signUpButton;
@@ -21,9 +25,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(getSupportActionBar() != null){ //hide the finalProject bar or whtver
+        if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
-
         }
 
         emailEditText = findViewById(R.id.EduEmail);
@@ -41,8 +44,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.loginButton:
                 String userEmail = emailEditText.getText().toString().trim();
                 String userPassword = passwordEditText.getText().toString().trim();
-
                 if (DB.checkUserCredentials(userEmail, userPassword)) {
+                    String username = getUsernameByEmail(userEmail);
+                    storeUsernameInSharedPreferences(username);
                     Intent intent = new Intent(MainActivity.this, homepage.class);
                     startActivity(intent);
                     Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
@@ -51,6 +55,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
         }
+    }
+
+    private String getUsernameByEmail(String email) {
+        SQLiteDatabase MyDB = DB.getReadableDatabase();
+        Cursor cursor = MyDB.rawQuery("SELECT username FROM users WHERE email = ?", new String[]{email});
+        if (cursor.moveToFirst()) {
+            String username = cursor.getString(0);
+            cursor.close();
+            return username;
+        }
+        cursor.close();
+        return null;
+    }
+
+    private void storeUsernameInSharedPreferences(String username) {
+        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("username", username);
+        editor.apply();
     }
 
     public void onCreateAccountClicked(View view) {

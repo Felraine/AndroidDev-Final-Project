@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class SignUpActivity extends AppCompatActivity {
-
     EditText username, password, email, confirmPass;
     Button signUpButton;
     databaseFunctions DB;
@@ -29,13 +28,15 @@ public class SignUpActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = username.getText().toString();
-                String pass = password.getText().toString();
-                String pass2 = confirmPass.getText().toString();
-                String mail = email.getText().toString();
+                String user = username.getText().toString().trim();
+                String pass = password.getText().toString().trim();
+                String pass2 = confirmPass.getText().toString().trim();
+                String mail = email.getText().toString().trim();
 
-                if (user.isEmpty() || pass.isEmpty() || mail.isEmpty() || pass2.isEmpty() && getText(Integer.parseInt(pass)) == getText(Integer.parseInt(pass2))) {
+                if (user.isEmpty() || pass.isEmpty() || mail.isEmpty() || pass2.isEmpty()) {
                     Toast.makeText(SignUpActivity.this, "Please enter all the fields", Toast.LENGTH_SHORT).show();
+                } else if (!pass.equals(pass2)) {
+                    Toast.makeText(SignUpActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
                 } else {
                     Boolean checkUser = DB.checkUsername(user);
                     if (!checkUser) {
