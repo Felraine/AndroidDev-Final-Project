@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    EditText username, password, email;
+    EditText username, password, email, confirmPass;
     Button signUpButton;
     databaseFunctions DB;
 
@@ -22,6 +22,7 @@ public class SignUpActivity extends AppCompatActivity {
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         email = findViewById(R.id.email);
+        confirmPass = findViewById(R.id.confirmPass);
         signUpButton = findViewById(R.id.signUpButton);
         DB = new databaseFunctions(this);
 
@@ -30,9 +31,10 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
+                String pass2 = confirmPass.getText().toString();
                 String mail = email.getText().toString();
 
-                if (user.isEmpty() || pass.isEmpty() || mail.isEmpty()) {
+                if (user.isEmpty() || pass.isEmpty() || mail.isEmpty() || pass2.isEmpty() && getText(Integer.parseInt(pass)) == getText(Integer.parseInt(pass2))) {
                     Toast.makeText(SignUpActivity.this, "Please enter all the fields", Toast.LENGTH_SHORT).show();
                 } else {
                     Boolean checkUser = DB.checkUsername(user);

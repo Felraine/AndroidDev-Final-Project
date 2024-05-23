@@ -34,6 +34,11 @@
         android:name="com.example.finalproject.ui.schedule.ScheduleFragment"
         android:label="Schedule"
         tools:layout="@layout/fragment_schedule"/>
+    <fragment
+        android:id="@+id/nav_notes"
+        android:name="com.example.finalproject.ui.notes.NotesFragment"
+        android:label="Notes"
+        tools:layout="@layout/fragment_notes"/>
 
 
 </navigation>

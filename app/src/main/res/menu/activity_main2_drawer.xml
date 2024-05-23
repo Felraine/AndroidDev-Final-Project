@@ -13,6 +13,9 @@
             android:icon="@drawable/budget_icon"
             android:title="Budget" />
         <item
+            android:id="@+id/nav_notes"
+            android:title="Notes"/>
+        <item
             android:id="@+id/nav_themes"
             android:icon="@drawable/themes_icon"
             android:title="@string/menu_themes" />
