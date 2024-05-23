@@ -8,17 +8,39 @@
     tools:context=".SignUpActivity">
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layoutPass"
+        android:layout_width="328dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/loginpage"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/layoutConfirmPass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="328dp"
+            android:layout_height="45dp"
+            android:background="@null"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingLeft="10sp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/layoutUsername"
         android:layout_width="328dp"
         android:layout_height="45dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/loginpage"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/layoutPass"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.906">
+        app:layout_constraintStart_toStartOf="parent">
 
         <EditText
             android:id="@+id/username"
@@ -30,50 +52,33 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/layoutPass"
-        android:layout_width="328dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/loginpage"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/layoutEduEmail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="328dp"
-            android:layout_height="45dp"
-            android:hint="Password"
-            android:inputType="textPassword" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/layoutEduEmail"
         android:layout_width="328dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="24dp"
         android:background="@drawable/loginpage"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/layoutConfirmPass"
+        app:layout_constraintBottom_toTopOf="@+id/layoutUsername"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.94">
 
         <EditText
             android:id="@+id/email"
             android:layout_width="328dp"
             android:layout_height="45dp"
+            android:background="@null"
             android:hint="Educational Email"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:paddingLeft="10sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/layoutConfirmPass"
         android:layout_width="328dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="104dp"
         android:background="@drawable/loginpage"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/signUpButton"
@@ -85,21 +90,24 @@
             android:id="@+id/confirmPass"
             android:layout_width="328dp"
             android:layout_height="45dp"
+            android:background="@null"
             android:hint="Confirm Password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:paddingLeft="10sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signUpButton"
         android:layout_width="177dp"
         android:layout_height="47dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="96dp"
         android:background="@drawable/signupbutton"
         android:text="Sign Up"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
