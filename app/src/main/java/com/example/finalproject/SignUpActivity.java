@@ -83,18 +83,18 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (imagePath == null || imagePath.isEmpty()) {
-                    Toast.makeText(SignUpActivity.this, "Please add a profile picture", Toast.LENGTH_SHORT).show();
-                    return;
-                }
 
-                boolean insert = DB.insertData(user, pass, mail, imagePath);
-                if (insert) {
-                    Toast.makeText(SignUpActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
+                if (imagePath != null && !imagePath.isEmpty()) {
+                    boolean insert = DB.insertData(user, pass, mail, imagePath);
+                    if (insert) {
+                        Toast.makeText(SignUpActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(SignUpActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(SignUpActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, "Profile picture not added", Toast.LENGTH_SHORT).show();
                 }
             }
         });

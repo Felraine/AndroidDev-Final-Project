@@ -81,10 +81,10 @@ public class homepage extends AppCompatActivity {
                 if (bitmap != null) {
                     profilePic.setImageBitmap(bitmap);
                 } else {
-                    profilePic.setImageResource(R.drawable.photo3); // Set default image if bitmap is null
+                    profilePic.setImageResource(R.drawable.photo3);
                 }
             } else {
-                profilePic.setImageResource(R.drawable.photo3); // Set default image if imagePath is null
+                profilePic.setImageResource(R.drawable.photo3);
             }
 
             usernameNav.setText(username);
