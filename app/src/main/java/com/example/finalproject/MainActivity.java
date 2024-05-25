@@ -46,10 +46,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String userPassword = passwordEditText.getText().toString().trim();
                 if (DB.checkUserCredentials(userEmail, userPassword)) {
                     String username = getUsernameByEmail(userEmail);
-                    storeUsernameInSharedPreferences(username);
-                    Intent intent = new Intent(MainActivity.this, homepage.class);
-                    startActivity(intent);
-                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    if (username != null) {
+                        storeUsernameInSharedPreferences(username);
+                        Intent intent = new Intent(MainActivity.this, homepage.class);
+                        startActivity(intent);
+                        Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Error retrieving username", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(MainActivity.this, "Invalid Email or Password", Toast.LENGTH_SHORT).show();
                 }
@@ -58,22 +62,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private String getUsernameByEmail(String email) {
-        SQLiteDatabase MyDB = DB.getReadableDatabase();
-        Cursor cursor = MyDB.rawQuery("SELECT username FROM users WHERE email = ?", new String[]{email});
-        if (cursor.moveToFirst()) {
-            String username = cursor.getString(0);
+        try {
+            SQLiteDatabase MyDB = DB.getReadableDatabase();
+            Cursor cursor = MyDB.rawQuery("SELECT username FROM users WHERE email = ?", new String[]{email});
+            if (cursor.moveToFirst()) {
+                String username = cursor.getString(0);
+                cursor.close();
+                return username;
+            }
             cursor.close();
-            return username;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        cursor.close();
         return null;
     }
 
     private void storeUsernameInSharedPreferences(String username) {
-        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("username", username);
-        editor.apply();
+        try {
+            SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("username", username);
+            editor.apply();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void onCreateAccountClicked(View view) {
