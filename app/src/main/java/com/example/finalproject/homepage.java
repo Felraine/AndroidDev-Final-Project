@@ -1,3 +1,4 @@
+// homepage.java
 package com.example.finalproject;
 
 import android.database.Cursor;
@@ -62,18 +63,19 @@ public class homepage extends AppCompatActivity {
         usernameNav = navigationView.getHeaderView(0).findViewById(R.id.usernameNav);
         emailNav = navigationView.getHeaderView(0).findViewById(R.id.emailNav);
 
-        getUserDataFromDatabase();
+        // Fetch user data from Intent
+        String username = getIntent().getStringExtra("USERNAME");
+        getUserDataFromDatabase(username);
     }
 
-    private void getUserDataFromDatabase() {
+    private void getUserDataFromDatabase(String username) {
         databaseFunctions dbHelper = new databaseFunctions(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM users", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM users WHERE username = ?", new String[]{username});
 
         if (cursor != null && cursor.moveToFirst()) {
             String imagePath = cursor.getString(cursor.getColumnIndex("profile_picture_path"));
-            String username = cursor.getString(cursor.getColumnIndex("username"));
             String email = cursor.getString(cursor.getColumnIndex("email"));
 
             if (imagePath != null) {
@@ -100,7 +102,6 @@ public class homepage extends AppCompatActivity {
         }
         db.close();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
