@@ -1,3 +1,4 @@
+// databaseFunctions.java
 package com.example.finalproject;
 
 import android.content.ContentValues;
@@ -7,8 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class databaseFunctions extends SQLiteOpenHelper {
-    public static final String DBNAME = "login.db";
-    private static final int DATABASE_VERSION = 2; // Increment version number
+    public static final String DBNAME = "studyLife.db";
+    private static final int DATABASE_VERSION = 3;
 
     public databaseFunctions(Context context) {
         super(context, DBNAME, null, DATABASE_VERSION);
@@ -16,27 +17,27 @@ public class databaseFunctions extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase MyDB) {
-        MyDB.execSQL("CREATE TABLE users(username TEXT PRIMARY KEY, password TEXT, email TEXT)");
+        MyDB.execSQL("CREATE TABLE users(username TEXT PRIMARY KEY, password TEXT, email TEXT, profile_picture_path TEXT)");
         MyDB.execSQL("CREATE TABLE feedback(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, feedback TEXT)");
     }
 
+
     @Override
     public void onUpgrade(SQLiteDatabase MyDB, int oldVersion, int newVersion) {
-        if (oldVersion < 2) {
-            // Drop existing tables if upgrading from version 1
+        if (oldVersion < DATABASE_VERSION) {
             MyDB.execSQL("DROP TABLE IF EXISTS users");
             MyDB.execSQL("DROP TABLE IF EXISTS feedback");
-            // Create new tables
             onCreate(MyDB);
         }
     }
 
-    public Boolean insertData(String username, String password, String email) {
+    public Boolean insertData(String username, String password, String email, String profilePicturePath) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("username", username);
         contentValues.put("password", password);
         contentValues.put("email", email);
+        contentValues.put("profile_picture_path", profilePicturePath);
         long result = MyDB.insert("users", null, contentValues);
         return result != -1;
     }
@@ -50,15 +51,15 @@ public class databaseFunctions extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public Boolean checkUsername(String username) {
+    public boolean checkUserCredentials(String email, String password) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
-        Cursor cursor = MyDB.rawQuery("SELECT * FROM users WHERE username = ?", new String[]{username});
+        Cursor cursor = MyDB.rawQuery("SELECT * FROM users WHERE email = ? AND password = ?", new String[]{email, password});
         return cursor.getCount() > 0;
     }
 
-    public Boolean checkUserCredentials(String email, String password) {
+    public Boolean checkUsername(String username) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
-        Cursor cursor = MyDB.rawQuery("SELECT * FROM users WHERE email = ? AND password = ?", new String[]{email, password});
+        Cursor cursor = MyDB.rawQuery("SELECT * FROM users WHERE username = ?", new String[]{username});
         return cursor.getCount() > 0;
     }
 }

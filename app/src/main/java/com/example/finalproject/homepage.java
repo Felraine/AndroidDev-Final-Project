@@ -1,11 +1,13 @@
 package com.example.finalproject;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
-
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
+import android.widget.TextView;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -15,11 +17,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.finalproject.databinding.ActivityHomepageBinding;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.navigation.NavigationView;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class homepage extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomepageBinding binding;
+    private CircleImageView profilePic;
+    private TextView usernameNav, emailNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,20 +49,61 @@ public class homepage extends AppCompatActivity {
         });
         DrawerLayout drawer = binding.drawerLayout;
         navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_themes, R.id.nav_feedback,R.id.nav_budget,R.id.nav_schedule,R.id.nav_notes) //every new fragment, add new
+                R.id.nav_home, R.id.nav_themes, R.id.nav_feedback,R.id.nav_budget,R.id.nav_schedule,R.id.nav_notes)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_homepage);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        profilePic = navigationView.getHeaderView(0).findViewById(R.id.profilePic);
+        usernameNav = navigationView.getHeaderView(0).findViewById(R.id.usernameNav);
+        emailNav = navigationView.getHeaderView(0).findViewById(R.id.emailNav);
+
+        getUserDataFromDatabase();
     }
+
+    private void getUserDataFromDatabase() {
+        databaseFunctions dbHelper = new databaseFunctions(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM users", null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            String imagePath = cursor.getString(cursor.getColumnIndex("profile_picture_path"));
+            String username = cursor.getString(cursor.getColumnIndex("username"));
+            String email = cursor.getString(cursor.getColumnIndex("email"));
+
+            if (imagePath != null) {
+                Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+                if (bitmap != null) {
+                    profilePic.setImageBitmap(bitmap);
+                } else {
+                    profilePic.setImageResource(R.drawable.photo3); // Set default image if bitmap is null
+                }
+            } else {
+                profilePic.setImageResource(R.drawable.photo3); // Set default image if imagePath is null
+            }
+
+            usernameNav.setText(username);
+            emailNav.setText(email);
+        } else {
+            profilePic.setImageResource(R.drawable.photo3);
+            usernameNav.setText("Default Username");
+            emailNav.setText("Default Email");
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+        db.close();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.homepage, menu);
         return true;
     }
