@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DB = new databaseFunctions(this);
 
         loginButton.setOnClickListener(this);
+        clearSharedPreferences();
     }
 
     @Override
@@ -86,6 +87,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void clearSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
     }
 
     public void onCreateAccountClicked(View view) {
