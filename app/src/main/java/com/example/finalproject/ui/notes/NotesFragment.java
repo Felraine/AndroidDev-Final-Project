@@ -1,64 +1,186 @@
 package com.example.finalproject.ui.notes;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.finalproject.databinding.FragmentBudgetBinding;
-import com.example.finalproject.databinding.FragmentNotesBinding;
+import com.example.finalproject.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NotesFragment extends Fragment {
-    public String title;
-    private String content;
-    private FragmentNotesBinding binding;
+    private static final String PREFS_NAME = "NotePrefs";
+    private static final String KEY_NOTE_COUNT = "NoteCount";
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        NotesViewModel notesViewModel =
-                new ViewModelProvider(this).get(NotesViewModel.class);
+    private LinearLayout notesContainer;
+    private final List<Note> noteList = new ArrayList<>();
 
-        binding = FragmentNotesBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_notes, container, false);
 
-        final TextView textView = binding.textNotes;
-        notesViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        notesContainer = root.findViewById(R.id.notesContainer);
+        Button saveButton = root.findViewById(R.id.saveButton);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveNote();
+            }
+        });
+
+        loadNotesFromPreferences();
+        displayNotes();
+
         return root;
     }
 
-    /*public Note(){
-
-    }*/
-
-    public String getTitle(){
-        return title;
+    private void displayNotes() {
+        for (Note note : noteList) {
+            createNoteView(note);
+        }
     }
 
-    public void setTitle(String title){
-        this.title= title;
+    private void loadNotesFromPreferences() {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, getContext().MODE_PRIVATE);
+        int noteCount = sharedPreferences.getInt(KEY_NOTE_COUNT, 0);
+
+        for (int i = 0; i < noteCount; i++) {
+            String title = sharedPreferences.getString("note_title_" + i, "");
+            String content = sharedPreferences.getString("note_content_" + i, "");
+
+            Note note = new Note();
+            note.setTitle(title);
+            note.setContent(content);
+
+            noteList.add(note);
+        }
     }
 
-    public String getContent(){
-        return content;
+    private void saveNote() {
+        EditText titleEditText = requireView().findViewById(R.id.titleEditText);
+        EditText contentEditText = requireView().findViewById(R.id.contentEditText);
+
+        String title = titleEditText.getText().toString();
+        String content = contentEditText.getText().toString();
+
+        if (!title.isEmpty() && !content.isEmpty()) {
+            Note note = new Note();
+            note.setTitle(title);
+            note.setContent(content);
+
+            noteList.add(note);
+            saveNotesToPreferences();
+
+            createNoteView(note);
+            clearInputFields();
+        }
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    private void clearInputFields() {
+        EditText titleEditText = requireView().findViewById(R.id.titleEditText);
+        EditText contentEditText = requireView().findViewById(R.id.contentEditText);
+
+        titleEditText.getText().clear();
+        contentEditText.getText().clear();
     }
 
-    /*public Note(String title, String content){
-        this.title=title;
-        this.content=content;
-    }*/
+    private void createNoteView(final Note note) {
+        View noteView = LayoutInflater.from(requireContext()).inflate(R.layout.note_item, null);
+        TextView titleTextView = noteView.findViewById(R.id.titleTextView);
+        TextView contentTextView = noteView.findViewById(R.id.contentTextView);
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+        titleTextView.setText(note.getTitle());
+        contentTextView.setText(note.getContent());
+
+        noteView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showDeleteDialog(note);
+                return true;
+            }
+        });
+
+        notesContainer.addView(noteView);
+    }
+
+    private void showDeleteDialog(final Note note) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Delete this note");
+        builder.setMessage("Are you sure you want to delete this note?");
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteNoteAndRefresh(note);
+            }
+        });
+        builder.setNegativeButton("Cancel", null);
+        builder.show();
+    }
+
+    private void deleteNoteAndRefresh(Note note) {
+        noteList.remove(note);
+        saveNotesToPreferences();
+        refreshNoteViews();
+    }
+
+    private void refreshNoteViews() {
+        notesContainer.removeAllViews();
+        displayNotes();
+    }
+
+    private void saveNotesToPreferences() {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, getContext().MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putInt(KEY_NOTE_COUNT, noteList.size());
+        for (int i = 0; i < noteList.size(); i++) {
+            Note note = noteList.get(i);
+            editor.putString("note_title_" + i, note.getTitle());
+            editor.putString("note_content_" + i, note.getContent());
+        }
+        editor.apply();
+    }
+
+    // Note class definition within the same file
+    public static class Note {
+        public String title;
+        private String content;
+
+        public Note() {
+        }
+
+        public Note(String title, String content) {
+            this.title = title;
+            this.content = content;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
     }
 }
