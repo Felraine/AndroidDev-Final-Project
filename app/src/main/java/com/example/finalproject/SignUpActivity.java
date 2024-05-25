@@ -1,3 +1,4 @@
+// SignUpActivity.java
 package com.example.finalproject;
 
 import android.content.Intent;

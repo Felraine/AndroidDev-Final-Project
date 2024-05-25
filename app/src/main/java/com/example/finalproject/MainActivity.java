@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (username != null) {
                         storeUsernameInSharedPreferences(username);
                         Intent intent = new Intent(MainActivity.this, homepage.class);
+                        intent.putExtra("USERNAME", username); // Pass the username to homepage activity
                         startActivity(intent);
                         Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     } else {
