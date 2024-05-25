@@ -1,6 +1,10 @@
-// homepage.java
 package com.example.finalproject;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -15,7 +19,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.finalproject.databinding.ActivityHomepageBinding;
 import com.google.android.material.snackbar.Snackbar;
@@ -29,6 +32,7 @@ public class homepage extends AppCompatActivity {
     private ActivityHomepageBinding binding;
     private CircleImageView profilePic;
     private TextView usernameNav, emailNav;
+    private String currentUser; // Store current user globally
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +41,7 @@ public class homepage extends AppCompatActivity {
         binding = ActivityHomepageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
 
         setSupportActionBar(binding.appBarHomepage.toolbar);
@@ -63,9 +67,14 @@ public class homepage extends AppCompatActivity {
         usernameNav = navigationView.getHeaderView(0).findViewById(R.id.usernameNav);
         emailNav = navigationView.getHeaderView(0).findViewById(R.id.emailNav);
 
-        // Fetch user data from Intent
-        String username = getIntent().getStringExtra("USERNAME");
-        getUserDataFromDatabase(username);
+        // Retrieve current user from SharedPreferences
+        currentUser = getLoggedInUsername();
+        getUserDataFromDatabase(currentUser);
+    }
+
+    private String getLoggedInUsername() {
+        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("username", "default_username");
     }
 
     private void getUserDataFromDatabase(String username) {
