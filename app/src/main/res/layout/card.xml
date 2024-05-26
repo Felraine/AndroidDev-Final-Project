@@ -36,30 +36,19 @@
 
                     tools:ignore="HardcodedText" />
 
-                <TextView
-                    android:id="@+id/timeView"
-                    android:layout_width="255dp"
-                    android:layout_height="39dp"
-                    android:layout_below="@+id/reminderTitle"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="200dp"
-                    android:layout_toStartOf="@+id/deleteButton"
-                    android:text="00:00" />
 
                 <TextView
-                    android:id="@+id/dateView"
-                    android:layout_width="150dp"
-                    android:layout_height="23dp"
-                    android:layout_below="@+id/reminderTitle"
-                    android:layout_alignStart="@+id/timeView"
+                    android:id="@+id/descView"
+                    android:layout_width="309dp"
+                    android:layout_height="39dp"
+                    android:layout_alignParentTop="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="100dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="120dp"
-                    android:layout_marginBottom="-1dp"
-                    android:text="Date" />
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="29dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_toStartOf="@+id/deleteButton"
+                    android:text=" short description" />
 
                 <ImageButton
                     android:id="@+id/deleteButton"

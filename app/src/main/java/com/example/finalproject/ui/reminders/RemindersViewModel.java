@@ -1,10 +1,12 @@
 package com.example.finalproject.ui.reminders;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class RemindersViewModel extends ViewModel {
     private final MutableLiveData<List<Reminder>> reminders;
@@ -25,27 +27,31 @@ public class RemindersViewModel extends ViewModel {
 
     public void removeReminder(Reminder reminder) {
         List<Reminder> currentReminders = reminders.getValue();
-        currentReminders.remove(reminder);
+        currentReminders.removeIf(r -> r.getId().equals(reminder.getId()));
         reminders.setValue(currentReminders);
     }
 
     public static class Reminder {
-        public String text;
-        public String time;
-        public int day;
-        public int month;
-        public int year;
-        public int hour;
-        public int min;
+        private String id;
+        private String title;
+        private String description;
 
-        public Reminder(String text, String time, int day, int month, int year, int hour, int min) {
-            this.text = text;
-            this.time = time;
-            this.day = day;
-            this.month = month;
-            this.year = year;
-            this.hour = hour;
-            this.min = min;
+        public Reminder(String title, String description) {
+            this.id = UUID.randomUUID().toString();
+            this.title = title;
+            this.description = description;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getDescription() {
+            return description;
         }
     }
 }
