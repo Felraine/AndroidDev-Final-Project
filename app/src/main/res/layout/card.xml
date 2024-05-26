@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.reminders.RemindersFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:padding="20dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/reminderTitle"
+                    android:layout_width="325dp"
+                    android:layout_height="25dp"
+                    android:text="Reminder Title"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/timeView"
+                    android:layout_width="255dp"
+                    android:layout_height="39dp"
+                    android:layout_below="@+id/reminderTitle"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="200dp"
+                    android:layout_toStartOf="@+id/deleteButton"
+                    android:text="00:00" />
+
+                <TextView
+                    android:id="@+id/dateView"
+                    android:layout_width="150dp"
+                    android:layout_height="23dp"
+                    android:layout_below="@+id/reminderTitle"
+                    android:layout_alignStart="@+id/timeView"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="120dp"
+                    android:layout_marginBottom="-1dp"
+                    android:text="Date" />
+
+                <ImageButton
+                    android:id="@+id/deleteButton"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/trash"
+                    tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</RelativeLayout>

@@ -56,7 +56,7 @@ public class homepage extends AppCompatActivity {
         navigationView = binding.navView;
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_themes, R.id.nav_feedback,R.id.nav_budget,R.id.nav_schedule,R.id.nav_notes)
+                R.id.nav_home, R.id.nav_themes, R.id.nav_feedback,R.id.nav_budget,R.id.nav_schedule,R.id.nav_notes,R.id.nav_reminders)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_homepage);
