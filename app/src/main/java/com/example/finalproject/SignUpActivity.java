@@ -1,4 +1,3 @@
-// SignUpActivity.java
 package com.example.finalproject;
 
 import android.content.Intent;
@@ -95,10 +94,18 @@ public class SignUpActivity extends AppCompatActivity {
                         Toast.makeText(SignUpActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(SignUpActivity.this, "Profile picture not added", Toast.LENGTH_SHORT).show();
+                    boolean insert = DB.insertData(user, pass, mail, null);
+                    if (insert) {
+                        Toast.makeText(SignUpActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(SignUpActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
+
     }
 
     private void openImagePicker() {

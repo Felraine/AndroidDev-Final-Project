@@ -1,6 +1,7 @@
 package com.example.finalproject.ui.notes;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,26 +12,29 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.finalproject.R;
+import com.example.finalproject.databaseFunctions;
+import com.example.finalproject.Note;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NotesFragment extends Fragment {
     private static final String PREFS_NAME = "NotePrefs";
-    private static final String KEY_NOTE_COUNT = "NoteCount";
 
     private LinearLayout notesContainer;
     private final List<Note> noteList = new ArrayList<>();
+    private databaseFunctions dbHelper;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_notes, container, false);
 
+        dbHelper = new databaseFunctions(requireContext());
         notesContainer = root.findViewById(R.id.notesContainer);
         Button saveButton = root.findViewById(R.id.saveButton);
 
@@ -41,31 +45,41 @@ public class NotesFragment extends Fragment {
             }
         });
 
-        loadNotesFromPreferences();
+        String currentUser = getCurrentUser();
+        loadNotesFromDatabase(currentUser);
         displayNotes();
 
         return root;
     }
 
+    private String getCurrentUser() {
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("username", null);
+    }
+
+
+    private void setCurrentUser(String username) {
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("username", username);
+        editor.apply();
+    }
+
     private void displayNotes() {
+        notesContainer.removeAllViews(); // Clear previous notes before displaying
         for (Note note : noteList) {
             createNoteView(note);
         }
     }
 
-    private void loadNotesFromPreferences() {
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, getContext().MODE_PRIVATE);
-        int noteCount = sharedPreferences.getInt(KEY_NOTE_COUNT, 0);
-
-        for (int i = 0; i < noteCount; i++) {
-            String title = sharedPreferences.getString("note_title_" + i, "");
-            String content = sharedPreferences.getString("note_content_" + i, "");
-
-            Note note = new Note();
-            note.setTitle(title);
-            note.setContent(content);
-
-            noteList.add(note);
+    private void loadNotesFromDatabase(String username) {
+        if (username != null) {
+            List<Note> notes = dbHelper.fetchNotesByUsername(username);
+            if (notes != null) {
+                noteList.addAll(notes);
+            }
+        } else {
+            Toast.makeText(requireContext(), "Username is null", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -76,18 +90,37 @@ public class NotesFragment extends Fragment {
         String title = titleEditText.getText().toString();
         String content = contentEditText.getText().toString();
 
-        if (!title.isEmpty() && !content.isEmpty()) {
-            Note note = new Note();
-            note.setTitle(title);
-            note.setContent(content);
+        String currentUser = getCurrentUser();
 
-            noteList.add(note);
-            saveNotesToPreferences();
+        if (!title.isEmpty() && !content.isEmpty() && currentUser != null) {
+            if (dbHelper.insertNote(currentUser, title, content)) {
+                Note note = new Note();
+                note.setTitle(title);
+                note.setContent(content);
+                note.setUsername(currentUser);
 
-            createNoteView(note);
-            clearInputFields();
+                noteList.add(note);
+                createNoteView(note);
+                clearInputFields();
+                Toast.makeText(requireContext(), "Saved note", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(requireContext(), "Failed to save note. Please try again.", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            if (title.isEmpty()) {
+                Toast.makeText(requireContext(), "Title is empty", Toast.LENGTH_SHORT).show();
+            }
+            if (content.isEmpty()) {
+                Toast.makeText(requireContext(), "Content is empty", Toast.LENGTH_SHORT).show();
+            }
+            if (currentUser == null) {
+                Toast.makeText(requireContext(), "Current user is null", Toast.LENGTH_SHORT).show();
+            }
+
+            Toast.makeText(requireContext(), "Please enter a title and content.", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void clearInputFields() {
         EditText titleEditText = requireView().findViewById(R.id.titleEditText);
@@ -132,55 +165,12 @@ public class NotesFragment extends Fragment {
 
     private void deleteNoteAndRefresh(Note note) {
         noteList.remove(note);
-        saveNotesToPreferences();
+        dbHelper.deleteNoteByUsername(note.getUsername(), note.getTitle());
         refreshNoteViews();
     }
 
     private void refreshNoteViews() {
         notesContainer.removeAllViews();
         displayNotes();
-    }
-
-    private void saveNotesToPreferences() {
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, getContext().MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putInt(KEY_NOTE_COUNT, noteList.size());
-        for (int i = 0; i < noteList.size(); i++) {
-            Note note = noteList.get(i);
-            editor.putString("note_title_" + i, note.getTitle());
-            editor.putString("note_content_" + i, note.getContent());
-        }
-        editor.apply();
-    }
-
-    // Note class definition within the same file
-    public static class Note {
-        public String title;
-        private String content;
-
-        public Note() {
-        }
-
-        public Note(String title, String content) {
-            this.title = title;
-            this.content = content;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
     }
 }

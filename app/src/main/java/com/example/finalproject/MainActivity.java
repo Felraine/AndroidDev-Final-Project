@@ -48,9 +48,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (DB.checkUserCredentials(userEmail, userPassword)) {
                     String username = getUsernameByEmail(userEmail);
                     if (username != null) {
-                        storeUsernameInSharedPreferences(username);
+                        storeUsernameInSharedPreferences(username); // Store username in SharedPreferences
                         Intent intent = new Intent(MainActivity.this, homepage.class);
-                        intent.putExtra("USERNAME", username); // Pass the username to homepage activity
                         startActivity(intent);
                         Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     } else {
@@ -80,14 +79,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void storeUsernameInSharedPreferences(String username) {
-        try {
-            SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("username", username);
-            editor.apply();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("username", username);
+        editor.apply();
     }
 
     private void clearSharedPreferences() {
