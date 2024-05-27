@@ -118,10 +118,16 @@ public class RemindersFragment extends Fragment {
                     RemindersViewModel.Reminder reminder = new RemindersViewModel.Reminder(reminderText, reminderDesc);
                     remindersViewModel.addReminder(reminder);
                     triggerNotification(reminderText, reminderDesc);
+                    clearString(name, desc);
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> {});
 
         dialog = builder.create();
+    }
+
+    private void clearString(EditText name, EditText desc){ //clear text after submit reminder
+        name.setText("");   desc.setText("");
+
     }
 
     private void addCard(RemindersViewModel.Reminder reminder) {            //card.xml stuff here
