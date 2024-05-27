@@ -3,14 +3,12 @@ package com.example.finalproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
 
@@ -21,7 +19,6 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.finalproject.databinding.ActivityHomepageBinding;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -45,18 +42,12 @@ public class homepage extends AppCompatActivity {
         navigationView.setItemIconTintList(null);
 
         setSupportActionBar(binding.appBarHomepage.toolbar);
-        binding.appBarHomepage.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         DrawerLayout drawer = binding.drawerLayout;
         navigationView = binding.navView;
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_themes, R.id.nav_feedback,R.id.nav_budget,R.id.nav_schedule,R.id.nav_notes,R.id.nav_reminders)
+                R.id.nav_home, R.id.nav_themes, R.id.nav_feedback, R.id.nav_budget, R.id.nav_schedule, R.id.nav_notes, R.id.nav_reminders)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_homepage);

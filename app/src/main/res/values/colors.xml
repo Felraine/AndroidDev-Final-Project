@@ -10,5 +10,23 @@
     <color name="green">#69CCBB</color>
     <color name="green2">#8C69CCBB</color> //lower opacity green
     <color name="gray">#A8A8A8</color>
+    <color name="grey">#dddddd</color>
     <color name="orange">#FF9F56</color>
+    <color name="magenta">#FF8E24AA</color>
+    <color name="turquoise">#FF40E0D0</color>
+    <color name="coral">#FFFF7F50</color>
+    <color name="goldenrod">#FFEC8B</color>
+    <color name="orchid">#FFDA70D6</color>
+    <color name="slate_blue">#FF6A5ACD</color>
+    <color name="tomato">#FFFF6347</color>
+    <color name="steel_blue">#FF4682B4</color>
+    <color name="sienna">#FFA0522D</color>
+    <color name="olive">#FF808000</color>
+    <color name="rose">#FF007F</color>
+    <color name="red">#FF4500</color>
+
+    <color name="lines">#c5c5c5</color>
+    <color name="main">#88c057</color>
+    <color name="backgrounds">#e5e5e5</color>
+    <color name="transparent">#00000000</color>
 </resources>
