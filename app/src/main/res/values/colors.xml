@@ -12,6 +12,7 @@
     <color name="gray">#A8A8A8</color>
     <color name="grey">#dddddd</color>
     <color name="orange">#FF9F56</color>
+    <color name="orange2">#99FF9F56</color>
     <color name="magenta">#FF8E24AA</color>
     <color name="turquoise">#FF40E0D0</color>
     <color name="coral">#FFFF7F50</color>
@@ -24,7 +25,6 @@
     <color name="olive">#FF808000</color>
     <color name="rose">#FF007F</color>
     <color name="red">#FF4500</color>
-
     <color name="lines">#c5c5c5</color>
     <color name="main">#88c057</color>
     <color name="backgrounds">#e5e5e5</color>

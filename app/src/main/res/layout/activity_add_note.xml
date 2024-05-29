@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#00B0FF"
     android:padding="20dp"
     tools:context=".AddNoteActivity">
 
@@ -13,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/titletextview"
-        android:text="Add new task"
-        android:textColor="@color/white"
+        android:text="Add Task"
+        android:textColor="@color/black"
         android:textSize="25dp"
         android:textStyle="bold"
         android:gravity="center"
@@ -26,21 +25,23 @@
         android:orientation="vertical"
         android:padding="10dp"
         android:layout_margin="10dp"
-        android:background="@drawable/rounded_corner">
+        android:background="@drawable/default_input_bg">
+
         <EditText
+            android:id="@+id/titleinput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/titleinput"
+            android:layout_margin="10dp"
+            android:background="@drawable/white_rounded_bg"
             android:hint="Title"
-            android:background="#3000B0FF"
             android:padding="10dp"
-            android:layout_margin="10dp"/>
+            tools:ignore="TouchTargetSizeCheck" />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/descriptioninput"
-            android:hint="Decription"
-            android:background="#3000B0FF"
+            android:hint="Description"
+            android:background="@drawable/white_rounded_bg"
             android:padding="10dp"
             android:layout_margin="10dp"
             android:lines="10"
@@ -50,13 +51,14 @@
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/savebtn"
-        android:text="Save Task"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:backgroundTint="@color/white"
-        android:textColor="#00B0FF"/>
+        android:background="@drawable/default_button_design"
+        android:text="Save Task"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/white" />
 
 
 </LinearLayout>
