@@ -22,4 +22,5 @@
     <string name="menu_feedback">Provide Feedback</string>
     <string name="feedbackTxt">We would appreciate your honest feedback about our app.Tell us what you think and let us know your concerns.</string>
     <string name="reminderTxt">Create and allow to instantly leave a notification reminder on your device. To remind you once you open your device.</string>
+    <string name="quote">A little progress for each day adds up to big results. -Satyna Nani</string>
 </resources>

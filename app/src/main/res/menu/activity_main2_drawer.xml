@@ -14,6 +14,7 @@
             android:title="Budget" />
         <item
             android:id="@+id/nav_todolist"
+            android:icon="@drawable/todolist_icon"
             android:title="To-do List"/>
         <item
             android:id="@+id/nav_notes"
