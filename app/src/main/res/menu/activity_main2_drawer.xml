@@ -13,6 +13,9 @@
             android:icon="@drawable/budget_icon"
             android:title="Budget" />
         <item
+            android:id="@+id/nav_todolist"
+            android:title="To-do List"/>
+        <item
             android:id="@+id/nav_notes"
             android:icon="@drawable/notes"
             android:title="Notes"/>

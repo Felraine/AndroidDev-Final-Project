@@ -46,5 +46,11 @@
         android:label="Reminders"
         tools:layout="@layout/fragment_reminders"/>
 
+    <fragment
+        android:id="@+id/nav_todolist"
+        android:name="com.example.finalproject.ui.todolist.ToDoListFragment"
+        android:label="To-do List"
+        tools:layout="@layout/fragment_to_do_list"/>
+
 
 </navigation>
