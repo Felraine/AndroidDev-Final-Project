@@ -14,7 +14,7 @@ import androidx.annotation.RequiresApi;
 
 public class databaseFunctions extends SQLiteOpenHelper {
     public static final String DBNAME = "studyLife.db";
-    private static final int DATABASE_VERSION = 12;
+    private static final int DATABASE_VERSION = 14;
 
     public databaseFunctions(Context context) {
         super(context, DBNAME, null, DATABASE_VERSION);
