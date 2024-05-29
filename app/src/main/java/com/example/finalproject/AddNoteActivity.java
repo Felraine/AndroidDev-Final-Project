@@ -1,4 +1,4 @@
-package com.example.finalproject;
+/*package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -46,4 +46,4 @@ public class AddNoteActivity extends AppCompatActivity {
             }
         });
     }
-}
+}*/

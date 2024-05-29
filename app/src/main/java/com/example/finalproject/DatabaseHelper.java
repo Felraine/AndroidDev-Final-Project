@@ -1,4 +1,4 @@
-package com.example.finalproject;
+/*package com.example.finalproject;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -77,4 +77,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete(TABLE_NOTES, COLUMN_ID + "=?", new String[]{String.valueOf(id)});
         db.close();
     }
-}
+}*/

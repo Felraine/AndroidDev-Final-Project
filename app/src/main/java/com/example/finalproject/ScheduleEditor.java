@@ -61,7 +61,7 @@ public class ScheduleEditor extends AppCompatActivity {
 
             submit.setOnClickListener(v-> {
                 if (sched.getText().toString().equals("")) {
-                    sched.setError("Task cannot be empty");
+                    sched.setError("Schedule cannot be empty");
                     return;
                 }
                 if (from.getText().equals("Click Here")) {
@@ -74,13 +74,13 @@ public class ScheduleEditor extends AppCompatActivity {
                 }
                 s.setSched(sched.getText().toString());
                 database.updateSched(s, date);
-                Toast.makeText(this, "Task updated successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Schedule updated successfully", Toast.LENGTH_SHORT).show();
                 finish();
             });
 
             delete.setOnClickListener(v-> {
                 database.deleteSched(s.getID(), date);
-                Toast.makeText(this, "Task deleted successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Schedule deleted successfully", Toast.LENGTH_SHORT).show();
                 finish();
             });
 

@@ -1,4 +1,4 @@
-package com.example.finalproject;
+/*package com.example.finalproject;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -85,4 +85,4 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             timeOutput = itemView.findViewById(R.id.timeoutput);
         }
     }
-}
+}*/
