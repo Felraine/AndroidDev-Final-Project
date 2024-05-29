@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/titletextview"
-        android:text="Add new note"
+        android:text="Add new task"
         android:textColor="@color/white"
         android:textSize="25dp"
         android:textStyle="bold"
@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/savebtn"
-        android:text="SAVE NOTE"
+        android:text="Save Task"
         android:layout_gravity="center"
         android:backgroundTint="@color/white"
         android:textColor="#00B0FF"/>

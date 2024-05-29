@@ -11,10 +11,11 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "notes.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public static final String TABLE_NOTES = "notes";
     public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_USERNAME = "username"; // Added column for username
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_CREATED_TIME = "created_time";
@@ -22,6 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_TABLE_NOTES =
             "CREATE TABLE " + TABLE_NOTES + " (" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_USERNAME + " TEXT, " + // Added column for username
                     COLUMN_TITLE + " TEXT, " +
                     COLUMN_DESCRIPTION + " TEXT, " +
                     COLUMN_CREATED_TIME + " INTEGER)";
@@ -41,9 +43,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(String title, String description, long createdTime) {
+    public boolean insertData(String username, String title, String description, long createdTime) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_USERNAME, username); // Add user's username
         contentValues.put(COLUMN_TITLE, title);
         contentValues.put(COLUMN_DESCRIPTION, description);
         contentValues.put(COLUMN_CREATED_TIME, createdTime);
@@ -51,10 +54,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public List<Notes> getAllNotes() {
+    public List<Notes> getAllNotes(String username) {
         List<Notes> notesList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NOTES, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NOTES + " WHERE " + COLUMN_USERNAME + " = ?", new String[]{username});
         if (cursor.moveToFirst()) {
             do {
                 Notes note = new Notes();

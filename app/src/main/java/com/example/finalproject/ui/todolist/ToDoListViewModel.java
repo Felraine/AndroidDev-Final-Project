@@ -10,7 +10,7 @@ public class ToDoListViewModel extends ViewModel {
 
     public ToDoListViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("Put the To Do List here");
+        //mText.setValue("Put the To Do List here");
     }
 
     public LiveData<String> getText() {

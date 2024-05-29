@@ -12,10 +12,10 @@
         android:id="@+id/notestitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NOTES"
-        android:textSize="20dp"
+        android:text="List of Tasks"
         android:textColor="@color/green"
-        android:textStyle="bold"/>
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
@@ -29,7 +29,7 @@
         android:id="@+id/addnewnotebtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add new note"
+        android:text="Add new task"
         android:textColor="#FFFFFF"
         android:backgroundTint="@color/green"
         android:layout_alignParentBottom="true"/>

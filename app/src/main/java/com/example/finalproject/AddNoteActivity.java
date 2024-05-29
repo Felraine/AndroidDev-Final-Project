@@ -2,6 +2,9 @@ package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -27,14 +30,18 @@ public class AddNoteActivity extends AppCompatActivity {
                 String description = descriptionInput.getText().toString();
                 long createdTime = System.currentTimeMillis();
 
+                SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+                String username = sharedPreferences.getString("username", "");
+
                 DatabaseHelper dbHelper = new DatabaseHelper(AddNoteActivity.this);
-                boolean isInserted = dbHelper.insertData(title, description, createdTime);
+                boolean isInserted = dbHelper.insertData(username, title, description, createdTime);
 
                 if (isInserted) {
-                    Toast.makeText(AddNoteActivity.this, "Note saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddNoteActivity.this, "Item saved", Toast.LENGTH_SHORT).show();
+                    setResult(RESULT_OK);
                     finish();
                 } else {
-                    Toast.makeText(AddNoteActivity.this, "Failed to save note", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddNoteActivity.this, "Failed to save item", Toast.LENGTH_SHORT).show();
                 }
             }
         });

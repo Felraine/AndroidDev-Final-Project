@@ -7,7 +7,6 @@ public class Notes {
     private long createdTime;
 
     public Notes() {
-        // Default constructor required for SQLite
     }
 
     public Notes(String title, String description, long createdTime) {
@@ -16,7 +15,6 @@ public class Notes {
         this.createdTime = createdTime;
     }
 
-    // Getters and setters
     public int getId() {
         return id;
     }

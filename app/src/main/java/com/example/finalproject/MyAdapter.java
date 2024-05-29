@@ -45,17 +45,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             public boolean onLongClick(View v) {
                 int clickedPosition = holder.getAdapterPosition(); // Use holder.getAdapterPosition() to get the current position
                 PopupMenu menu = new PopupMenu(context, v);
-                menu.getMenu().add("DELETE");
+                menu.getMenu().add("Complete");
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        if (item.getTitle().equals("DELETE")) {
+                        if (item.getTitle().equals("Complete")) {
                             // Delete the note
                             DatabaseHelper dbHelper = new DatabaseHelper(context);
                             dbHelper.deleteNoteById(note.getId());
-                            notesList.remove(clickedPosition); // Remove the item at the clicked position
+                            notesList.remove(clickedPosition);
                             notifyDataSetChanged();
-                            Toast.makeText(context, "Note deleted", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Task completed", Toast.LENGTH_SHORT).show();
                         }
                         return true;
                     }
