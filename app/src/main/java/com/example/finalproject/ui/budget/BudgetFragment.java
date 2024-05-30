@@ -1,5 +1,7 @@
 package com.example.finalproject.ui.budget;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -18,6 +20,8 @@ import com.example.finalproject.Expense;
 import com.example.finalproject.ExpenseAdapter;
 import com.example.finalproject.R;
 import com.example.finalproject.databinding.FragmentBudgetBinding;
+import com.example.finalproject.ExpenseDatabaseHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +36,7 @@ public class BudgetFragment extends Fragment {
     private double totalExpenses = 0.0;
     private TextView currentBudgetTextView;
     private TextView totalExpenseTextView;
+    private ExpenseDatabaseHelper databaseHelper;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -67,7 +72,26 @@ public class BudgetFragment extends Fragment {
             }
         });
 
+        databaseHelper = new ExpenseDatabaseHelper(getContext());
+
+        updateUI();
+
         return root;
+    }
+
+    private void updateUI() {
+        expenseList.clear();
+        expenseList.addAll(getExpensesFromDatabase());
+        expenseAdapter.notifyDataSetChanged();
+        updateBudgetAndExpensesDisplay();
+    }
+
+    private List<Expense> getExpensesFromDatabase() {
+        if (databaseHelper != null) {
+            return databaseHelper.getExpenses(getCurrentUser());
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     private void showAddExpenseDialog() {
@@ -89,10 +113,8 @@ public class BudgetFragment extends Fragment {
 
                 if (!TextUtils.isEmpty(expenseName) && !TextUtils.isEmpty(expenseAmountStr)) {
                     double expenseAmount = Double.parseDouble(expenseAmountStr);
-                    expenseList.add(new Expense(expenseName, expenseAmount));
-                    expenseAdapter.notifyDataSetChanged();
-                    updateBudget(-expenseAmount);
-                    updateTotalExpenses(expenseAmount);
+                    addExpenseToDatabase(expenseName, expenseAmount);
+                    updateUI();
                     dialog.dismiss();
                 }
             }
@@ -110,20 +132,16 @@ public class BudgetFragment extends Fragment {
         final EditText incomeAmountEditText = dialogView.findViewById(R.id.incomeAmountEditText);
         Button saveButton = dialogView.findViewById(R.id.saveButton);
 
-
-
         final AlertDialog dialog = builder.create();
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String incomeName = ("Income");
                 String incomeAmountStr = incomeAmountEditText.getText().toString();
 
                 if (!TextUtils.isEmpty(incomeAmountStr)) {
                     double incomeAmount = Double.parseDouble(incomeAmountStr);
-                    totalIncome += incomeAmount;
-                    expenseList.add(new Expense(incomeName, incomeAmount));
-                    updateBudget(incomeAmount);
+                    addIncomeToDatabase(incomeAmount);
+                    updateUI();
                     dialog.dismiss();
                 }
             }
@@ -132,19 +150,37 @@ public class BudgetFragment extends Fragment {
         dialog.show();
     }
 
-    private void updateBudget(double amount) {
-        currentBudget += amount;
-        currentBudgetTextView.setText("Wallet: PHP " + String.format("%.2f", currentBudget));
+    private void addIncomeToDatabase(double incomeAmount) {
+        if (databaseHelper != null) {
+            String currentUser = getCurrentUser();
+            databaseHelper.addIncome(currentUser, incomeAmount);
+        }
     }
 
-    private void updateTotalExpenses(double expenseAmount) {
-        totalExpenses += expenseAmount;
+    private void addExpenseToDatabase(String expenseName, double expenseAmount) {
+        if (databaseHelper != null) {
+            String currentUser = getCurrentUser();
+            databaseHelper.addExpense(currentUser, expenseName, expenseAmount);
+        }
+    }
+
+    private void updateBudgetAndExpensesDisplay() {
+        totalIncome = 0.0;
+        totalExpenses = 0.0;
+        for (Expense expense : expenseList) {
+            if (expense.getType() == 1) {
+                totalIncome += expense.getAmount();
+            } else {
+                totalExpenses += expense.getAmount();
+            }
+        }
+        currentBudget = totalIncome - totalExpenses;
+        currentBudgetTextView.setText("Wallet: PHP " + String.format("%.2f", currentBudget));
         totalExpenseTextView.setText("Expenses: PHP " + String.format("%.2f", totalExpenses));
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    private String getCurrentUser() {
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("username", null);
     }
 }

@@ -1,0 +1,7 @@
+<resources>
+    <color name="customPrimaryColor">#eea1cd</color>
+    <color name="customPrimaryDarkColor">#e68bbe</color>
+    <color name="customAccentColor">#f4b8da</color>
+    <color name="customTextColor">#FFFFFF</color>
+    <color name="customBackgroundColor">#000000</color>
+</resources>
