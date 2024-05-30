@@ -6,24 +6,14 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/expenseNameEditText"
+        android:id="@+id/incomeAmountEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Expense Name"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/expenseAmountEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Expense Amount"
+        android:hint="Income Amount"
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/expenseNameEditText" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/saveButton"
@@ -32,6 +22,5 @@
         android:text="Save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/expenseAmountEditText" />
-
+        app:layout_constraintTop_toBottomOf="@id/incomeAmountEditText" />
 </androidx.constraintlayout.widget.ConstraintLayout>
